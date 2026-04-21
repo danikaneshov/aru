@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приемы обучения табличному умножению и делению</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* =========================================
+           1. CORE VARIABLES & SETUP
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --color-bg-light: #ffffff;
+            --color-bg-secondary: #f8fafc;
+            --color-bg-dark: #1e293b;
+            --color-text-dark: #334155;
+            --color-text-light: #f8fafc;
+            --color-accent-gold: #f59e0b; 
+            --color-accent-blue: #3b82f6; 
+            --font-headings: 'Poppins', sans-serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            font-family: var(--font-body);
+            overflow: hidden; 
+        }
+
+        .presentation-wrapper {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory; 
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .presentation-wrapper::-webkit-scrollbar { display: none; }
+
+        .slide-wrapper {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: center; 
+            perspective: 1000px;
+        }
+
+        .slide-container {
+            background-color: var(--color-bg-light);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+            width: 1280px;
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.5s ease;
+        }
+
+        .slide-wrapper.active .slide-container { transform: scale(1); }
+
+        .slide-container.dark-theme { background-color: var(--color-bg-dark); color: var(--color-text-light); }
+
+        .slide-container.dark-theme::before {
+            content: ''; position: absolute; top: -150px; right: -150px; width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(30, 41, 59, 0) 70%);
+            border-radius: 50%; z-index: 0; animation: pulse-bg 6s infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 1; }
+        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+        
+        p { margin-bottom: 20px; }
+        strong, .highlight { color: var(--color-accent-blue); font-weight: 700; }
+        .dark-theme strong, .dark-theme .highlight { color: var(--color-accent-gold); }
+
+        /* =========================================
+           2. TYPOGRAPHY
+           ========================================= */
+        h1, h2, h3, h4 { font-family: var(--font-headings); font-weight: 600; margin: 0; }
+        h1 { font-size: 56px; line-height: 1.2; color: var(--color-text-light); margin-bottom: 20px; }
+
+        .slide-title {
+            font-size: 40px; color: var(--color-bg-dark); width: 100%; margin-bottom: 40px; padding-bottom: 15px; border-bottom: 3px solid var(--color-accent-blue); flex-shrink: 0;
+        }
+        .dark-theme .slide-title { color: var(--color-text-light); border-bottom-color: var(--color-accent-gold); text-align: center; }
+
+        h3 { font-size: 26px; color: var(--color-bg-dark); margin-bottom: 15px; }
+        p, li, th, td { color: var(--color-text-dark); font-size: 20px; line-height: 1.6; }
+        .dark-theme p, .dark-theme li { color: var(--color-text-light); }
+
+        .content-area { display: flex; flex-direction: column; flex-grow: 1; width: 100%; justify-content: center; }
+
+        /* =========================================
+           3. LAYOUT DEFINITIONS
+           ========================================= */
+        .title-layout { display: flex; flex-direction: column; justify-content: center; height: 100%; width: 80%; }
+        .title-layout .subtitle { font-size: 24px; color: var(--color-accent-gold); margin-bottom: 40px; font-weight: 600; letter-spacing: 2px;}
+        .title-layout .meta-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 30px; }
+        .meta-info p { font-size: 16px; margin-bottom: 5px; color: #cbd5e1; }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; align-items: center; }
+        .image-wrapper { border-radius: 12px; height: 400px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background-color: var(--color-bg-secondary);}
+        /* Object fit cover ensures the black borders of screenshots are cropped perfectly */
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: center; } 
+
+        .two-column.tiled { align-items: stretch; }
+        .two-column.tiled > div { background-color: var(--color-bg-secondary); border-radius: 12px; border-left: 5px solid var(--color-accent-blue); padding: 40px; }
+
+        .tiled-content { display: flex; gap: 30px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .tile { background-color: var(--color-bg-secondary); border-radius: 12px; display: flex; flex-direction: column; flex: 1; min-width: 250px; padding: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .tile .icon { color: var(--color-accent-gold); font-size: 40px; margin-bottom: 20px; }
+        .tile p { font-size: 18px; margin-bottom: 0; }
+
+        .bullet-list ul { list-style: none; }
+        .bullet-list li { position: relative; padding-left: 45px; margin-bottom: 25px; }
+        .bullet-list i { position: absolute; left: 0; top: 4px; color: var(--color-accent-blue); font-size: 24px; }
+
+        .bleed-image-layout { padding: 0 !important; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+        .bleed-image-layout > .content-container { padding: 60px; height: 100%; display: flex; flex-direction: column; justify-content: center;}
+        .bleed-image-layout .image-container { height: 100%; width: 100%; overflow: hidden; }
+        .bleed-image-layout img.bleed-image-side { height: 720px; width: 100%; object-fit: cover; object-position: center; }
+
+        .timeline-layout { display: flex; align-items: stretch; height: stretch; justify-content: space-between; position: relative; width: 100%; margin-top: 40px; }
+        .timeline-line { background-color: #cbd5e1; height: 4px; left: 0; position: absolute; top: 50%; transform: translateY(-2px); width: 0; z-index: 0; }
+        .timeline-item { position: relative; text-align: center; width: 30%; opacity: 0; }
+        .timeline-item::after { background-color: var(--color-bg-light); border-radius: 50%; border: 4px solid var(--color-accent-blue); content: ''; height: 24px; left: 50%; position: absolute; top: 50%; transform: translate(-50%, -50%); width: 24px; z-index: 1; }
+        .timeline-item .content-wrapper { position: absolute; width: 100%; left: 0; }
+        .timeline-item:nth-child(odd) .content-wrapper { bottom: 50%; margin-bottom: 30px; }
+        .timeline-item:nth-child(even) .content-wrapper { top: 50%; margin-top: 30px; }
+        .timeline-item h3 { color: var(--color-accent-blue); }
+
+        .table-layout { width: 100%; background: var(--color-bg-secondary); border-radius: 12px; overflow: hidden; }
+        .table-layout table { border-collapse: collapse; width: 100%; }
+        .table-layout th, .table-layout td { padding: 20px 25px; text-align: center; border-bottom: 1px solid #e2e8f0; }
+        .table-layout th { background-color: var(--color-bg-dark); color: var(--color-text-light); font-family: var(--font-headings); font-weight: 600; }
+        .table-layout td:first-child { text-align: left; font-weight: 700; color: var(--color-bg-dark); }
+        .data-up { color: #10b981; font-weight: bold; }
+        .data-down { color: #ef4444; font-weight: bold; }
+
+        .section-title-layout { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; text-align: center; padding: 0 100px; }
+        .section-title-layout h2 { font-size: 50px; margin-bottom: 30px; color: var(--color-accent-gold); }
+        .section-title-layout p { font-size: 28px; line-height: 1.5; color: var(--color-text-light); }
+
+        /* =========================================
+           4. ВАУ-АНИМАЦИИ (THE MAGIC)
+           ========================================= */
+        .anim-fade-up, .anim-slide-right, .anim-slide-left, .anim-pop, .anim-zoom, .anim-drop { opacity: 0; visibility: hidden; }
+
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(60px); visibility: hidden; } 100% { opacity: 1; transform: translateY(0); visibility: visible; } }
+        @keyframes slideRight { 0% { opacity: 0; transform: translateX(-80px); visibility: hidden; } 100% { opacity: 1; transform: translateX(0); visibility: visible; } }
+        @keyframes slideLeft { 0% { opacity: 0; transform: translateX(80px); visibility: hidden; } 100% { opacity: 1; transform: translateX(0); visibility: visible; } }
+        @keyframes dropDown { 0% { opacity: 0; transform: translateY(-80px); visibility: hidden; } 100% { opacity: 1; transform: translateY(0); visibility: visible; } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5) translateY(20px); visibility: hidden; } 70% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1) translateY(0); visibility: visible; } }
+        @keyframes zoomIn { 0% { opacity: 0; transform: scale(1.1); visibility: hidden; } 100% { opacity: 1; transform: scale(1); visibility: visible; } }
+        @keyframes drawLine { 0% { width: 0; } 100% { width: 100%; } }
+
+        .is-visible .anim-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .is-visible .anim-slide-right { animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .is-visible .anim-slide-left { animation: slideLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .is-visible .anim-drop { animation: dropDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .is-visible .anim-pop { animation: popIn 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .is-visible .anim-zoom { animation: zoomIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .is-visible .anim-line { animation: drawLine 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        .delay-100 { animation-delay: 0.1s !important; } .delay-200 { animation-delay: 0.2s !important; }
+        .delay-300 { animation-delay: 0.3s !important; } .delay-400 { animation-delay: 0.4s !important; }
+        .delay-500 { animation-delay: 0.5s !important; } .delay-600 { animation-delay: 0.6s !important; }
+        .delay-700 { animation-delay: 0.7s !important; } .delay-800 { animation-delay: 0.8s !important; }
+
+        .nav-dots { position: fixed; right: 30px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 100; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: var(--color-accent-blue); transform: scale(1.5); }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационные точки -->
+    <div class="nav-dots" id="navDots"></div>
+
+    <div class="presentation-wrapper" id="presentationWrapper">
+
+        <!-- Slide 1: Title -->
+        <div class="slide-wrapper" id="sw1">
+            <div class="slide-container dark-theme slide">
+                <div class="title-layout">
+                    <p class="subtitle anim-slide-right delay-100">Высший педагогический колледж МУА (1928)</p>
+                    <h1 class="anim-drop delay-300">Приемы обучения младших школьников табличному умножению и делению</h1>
+                    
+                    <div class="meta-info anim-fade-up delay-600">
+                        <div>
+                            <p><strong>Специальность:</strong> 01140100 «Педагогика и методика»</p>
+                            <p><strong>Квалификация:</strong> Учитель начального образования</p>
+                        </div>
+                        <div>
+                            <p><strong>Студент:</strong> Бакуева Арулана Бауржанкызы</p>
+                            <p><strong>Руководитель:</strong> Дүйсенбекова Ж. Б.</p>
+                            <p style="margin-top: 15px; color: #94a3b8;">Астана, 2026</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Intro (Текст по центру) -->
+        <div class="slide-wrapper" id="sw2">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-slide-right delay-100">Введение в проблематику</h2>
+                <div class="content-area" style="align-items: center; text-align: center; max-width: 900px; margin: 0 auto;">
+                    <div class="anim-zoom delay-200" style="font-size: 50px; color: var(--color-accent-gold); margin-bottom: 20px;"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <p class="anim-fade-up delay-300" style="font-size: 24px; margin-bottom: 30px;">Обучение математике в начальной школе — <strong>важнейший этап</strong> формирования базовых учебных навыков учащихся.</p>
+                    <p class="anim-fade-up delay-400" style="font-size: 24px;">Ключевым компонентом математической подготовки выступает прочное усвоение табличного умножения и деления.</p>
+                    
+                    <div class="anim-pop delay-600" style="background: var(--color-bg-secondary); padding: 30px; border-left: 6px solid #ef4444; border-radius: 8px; margin-top: 40px; text-align: left;">
+                        <h3 style="color: #ef4444; font-size: 22px; margin-bottom: 10px;">Основная проблема:</h3>
+                        <p style="margin-bottom: 0; font-size: 20px;">Процесс обучения часто сводится к <span class="highlight" style="color: #ef4444;">механическому заучиванию</span>. Это снижает интерес к предмету и не обеспечивает осознанного усвоения материала.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Apparatus (Tiles) -->
+        <div class="slide-wrapper" id="sw3">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-drop delay-100">Методологический аппарат</h2>
+                <div class="content-area">
+                    <div class="tiled-content">
+                        <div class="tile anim-pop delay-200">
+                            <div class="icon"><i class="fa-solid fa-bullseye"></i></div>
+                            <h3>Актуальность</h3>
+                            <p>В современной начальной школе сохраняется проблема недостаточной сформированности прочных навыков табличных вычислений.</p>
+                        </div>
+                        <div class="tile anim-pop delay-400">
+                            <div class="icon"><i class="fa-solid fa-flag"></i></div>
+                            <h3>Цель</h3>
+                            <p>Изучить и научно обосновать наиболее эффективные приемы обучения младших школьников табличному умножению и делению.</p>
+                        </div>
+                        <div class="tile anim-pop delay-600">
+                            <div class="icon"><i class="fa-solid fa-lightbulb"></i></div>
+                            <h3>Гипотеза</h3>
+                            <p>Эффективность усвоения материала напрямую зависит от применения разнообразных и методически обоснованных приемов обучения.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Base (С добавленным фото класса) -->
+        <div class="slide-wrapper" id="sw4">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-slide-right delay-100">База исследования</h2>
+                <div class="content-area">
+                    <div class="two-column">
+                        <div style="display: flex; flex-direction: column; gap: 30px;">
+                            <div class="anim-slide-right delay-300" style="background: var(--color-bg-secondary); padding: 30px; border-radius: 12px; border-left: 5px solid var(--color-accent-blue);">
+                                <h3>Объект и Предмет</h3>
+                                <p style="font-size: 18px;"><strong>Объект:</strong> Процесс обучения математике в условиях начальной школы.</p>
+                                <p style="font-size: 18px; margin-bottom: 0;"><strong>Предмет:</strong> Конкретные приемы и методы формирования навыков у школьников.</p>
+                            </div>
+                            <div class="anim-slide-right delay-500" style="background: var(--color-bg-secondary); padding: 30px; border-radius: 12px; border-left: 5px solid var(--color-accent-gold);">
+                                <h3>Методы исследования</h3>
+                                <ul style="padding-left: 20px; line-height: 1.8; font-size: 18px;">
+                                    <li>Анализ литературы.</li>
+                                    <li>Сравнительный анализ методик.</li>
+                                    <li>Наблюдение за учебной деятельностью.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- ФОТО 1: Класс с желтой стеной -->
+                        <div class="image-wrapper anim-zoom delay-600" style="height: 480px; position: relative;">
+                            <img src="WhatsApp Image 2026-04-21 at 17.42.30.jpeg" alt="Класс BINOM-school">
+                            <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 8px; font-size: 14px;">
+                                <i class="fa-solid fa-location-dot"></i> BINOM-school-лицей им. А. Байтурсынова
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Tasks List -->
+        <div class="slide-wrapper" id="sw5">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-drop delay-100">Задачи исследования</h2>
+                <div class="content-area">
+                    <div class="bullet-list" style="max-width: 1000px; margin: 0 auto;">
+                        <ul>
+                            <li class="anim-slide-left delay-200">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <p><strong>Изучить особенности возраста:</strong> Проанализировать психолого-педагогические особенности младших школьников, влияющие на восприятие математической информации.</p>
+                            </li>
+                            <li class="anim-slide-left delay-400">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <p><strong>Раскрыть сущность:</strong> Определить фундаментальное значение табличного умножения и деления в структуре начального курса математики.</p>
+                            </li>
+                            <li class="anim-slide-left delay-600">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <p><strong>Проанализировать методики:</strong> Дать критическую оценку существующим подходам и методикам обучения табличным вычислениям, выделив их сильные и слабые стороны.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Bleed Image (С фото интерактивной доски) -->
+        <div class="slide-wrapper" id="sw6">
+            <div class="slide-container bleed-image-layout slide">
+                <div class="content-container">
+                    <h2 class="slide-title anim-slide-right delay-100" style="border-bottom: none; padding-bottom: 0; margin-bottom: 30px;">Особенности возраста</h2>
+                    <div class="content-area">
+                        <div class="bleed-text-side">
+                            <h3 style="color: var(--color-accent-blue);" class="anim-fade-up delay-200">Наглядно-образное мышление</h3>
+                            <p class="anim-fade-up delay-300">Младший школьный возраст (6-10 лет) — критически важный этап формирования основ учебной деятельности.</p>
+                            <p class="anim-fade-up delay-400">Мышление детей в этот период носит преимущественно <strong>наглядно-образный характер</strong>. Это означает, что абстрактные математические понятия требуют мощной визуализации.</p>
+                            <p class="anim-fade-up delay-500" style="background: #f1f5f9; padding: 15px; border-radius: 8px; border-left: 4px solid #f59e0b; margin-top: 20px;">Традиционная методика, основанная лишь на многократном повторении, не учитывает эту особенность, что приводит к быстрому снижению мотивации.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- ФОТО 2: Доска 15:5 -->
+                <div class="image-container anim-zoom delay-200">
+                    <img class="bleed-image-side" src="image_ae2307.jpg" style="object-position: top center;" alt="Наглядно-образное мышление на доске">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: 4 Tiles Methods -->
+        <div class="slide-wrapper" id="sw7">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-drop delay-100">Эффективные приемы обучения</h2>
+                <div class="content-area">
+                    <div class="tiled-content">
+                        <div class="tile anim-pop delay-200" style="min-width: 45%;">
+                            <div class="icon"><i class="fa-solid fa-brain"></i></div>
+                            <h3>Осмысленное запоминание</h3>
+                            <p>Отказ от "зубрежки" в пользу понимания структуры таблицы и самостоятельного выявления математических закономерностей.</p>
+                        </div>
+                        <div class="tile anim-pop delay-300" style="min-width: 45%;">
+                            <div class="icon"><i class="fa-solid fa-gamepad"></i></div>
+                            <h3>Игровые технологии</h3>
+                            <p>Внедрение математических игр, соревнований и активных физминуток с практическим использованием знаний для повышения мотивации.</p>
+                        </div>
+                        <div class="tile anim-pop delay-400" style="min-width: 45%;">
+                            <div class="icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                            <h3>Обратные действия</h3>
+                            <p>Активное использование деления для прочного закрепления умножения через осознание связи «произведение — множители».</p>
+                        </div>
+                        <div class="tile anim-pop delay-500" style="min-width: 45%;">
+                            <div class="icon"><i class="fa-solid fa-users-viewfinder"></i></div>
+                            <h3>Дифференцированный подход</h3>
+                            <p>Работа в парах (взаимопроверка), адаптация заданий: базовые для слабых учеников, усложненные для сильных.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: НОВЫЙ СЛАЙД (Практическая реализация - Фото) -->
+        <div class="slide-wrapper" id="sw8">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-slide-right delay-100">Практическая реализация на уроках</h2>
+                <div class="content-area">
+                    <div class="two-column" style="gap: 40px; align-items: stretch;">
+                        
+                        <!-- ФОТО 3: Игра перетягивание каната -->
+                        <div class="anim-fade-up delay-300" style="display: flex; flex-direction: column; background: var(--color-bg-secondary); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                            <div class="image-wrapper" style="height: 320px; border-radius: 0; box-shadow: none;">
+                                <img src="WhatsApp Image 2026-04-21 at 17.42.30 (1).jpeg" alt="Математическое перетягивание каната">
+                            </div>
+                            <div style="padding: 25px;">
+                                <h3 style="color: var(--color-accent-blue); font-size: 22px;">Игровые технологии</h3>
+                                <p style="font-size: 16px; margin-bottom: 0;">Использование интерактивной игры «Математическое перетягивание каната» у доски стимулирует соревновательный дух и скорость вычислений.</p>
+                            </div>
+                        </div>
+
+                        <!-- ФОТО 4: Работа в парах/группах -->
+                        <div class="anim-fade-up delay-500" style="display: flex; flex-direction: column; background: var(--color-bg-secondary); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                            <div class="image-wrapper" style="height: 320px; border-radius: 0; box-shadow: none;">
+                                <img src="WhatsApp Image 2026-04-21 at 17.42.29 (1).jpeg" style="object-position: center 30%;" alt="Работа в группах">
+                            </div>
+                            <div style="padding: 25px;">
+                                <h3 style="color: var(--color-accent-gold); font-size: 22px;">Дифференцированный подход</h3>
+                                <p style="font-size: 16px; margin-bottom: 0;">Организация работы в мини-группах под контролем педагога. Сильные ученики объясняют материал слабым (взаимопроверка).</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Timeline -->
+        <div class="slide-wrapper" id="sw9">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-slide-right delay-100">Ход практического исследования</h2>
+                <div class="content-area">
+                    <p class="anim-fade-up delay-200" style="text-align: center; font-size: 22px; max-width: 900px; margin: 0 auto 40px auto;">
+                        Эксперимент проводился на базе <strong>BINOM-school-лицей имени А. Байтурсынова</strong>.<br> В исследовании приняли участие 25 учащихся 4 «О» класса.
+                    </p>
+                    <div class="timeline-layout">
+                        <div class="timeline-line anim-line delay-400"></div>
+                        
+                        <div class="timeline-item anim-pop delay-600">
+                            <div class="content-wrapper">
+                                <h3>1. Констатирующий этап</h3>
+                                <p style="font-size: 18px;">Первичная диагностика исходного уровня знаний умножения и деления у класса.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item anim-pop delay-800">
+                            <div class="content-wrapper">
+                                <h3>2. Формирующий этап</h3>
+                                <p style="font-size: 18px;">Активное внедрение в образовательный процесс комплекса новых методических приемов.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item anim-pop" style="animation-delay: 1s;">
+                            <div class="content-wrapper">
+                                <h3>3. Контрольный этап</h3>
+                                <p style="font-size: 18px;">Финальная оценка эффективности примененных приемов и выявление динамики.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Criteria -->
+        <div class="slide-wrapper" id="sw10">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-drop delay-100">Критерии оценивания знаний</h2>
+                <div class="content-area">
+                    <div class="tiled-content">
+                        <div class="tile anim-fade-up delay-200" style="border-top: 5px solid #10b981;">
+                            <div class="icon" style="color: #10b981;"><i class="fa-solid fa-gauge-high"></i></div>
+                            <h3>Высокий уровень</h3>
+                            <p>Быстро и безошибочно выполняет вычисления, четко понимает взаимосвязь действий и легко применяет знания в текстовых задачах.</p>
+                        </div>
+                        <div class="tile anim-fade-up delay-400" style="border-top: 5px solid #f59e0b;">
+                            <div class="icon" style="color: #f59e0b;"><i class="fa-solid fa-gauge"></i></div>
+                            <h3>Средний уровень</h3>
+                            <p>Допускает незначительные ошибки. Выполняет задания с опорой на подсказки учителя, испытывает некоторые трудности при решении задач.</p>
+                        </div>
+                        <div class="tile anim-fade-up delay-600" style="border-top: 5px solid #ef4444;">
+                            <div class="icon" style="color: #ef4444;"><i class="fa-solid fa-gauge-low"></i></div>
+                            <h3>Низкий уровень</h3>
+                            <p>Практически не знает таблицу. Допускает систематические ошибки, не понимает смысловую связь между математическими действиями.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Table -->
+        <div class="slide-wrapper" id="sw11">
+            <div class="slide-container slide">
+                <h2 class="slide-title anim-slide-right delay-100">Сравнительный анализ результатов</h2>
+                <div class="content-area">
+                    <p class="anim-fade-up delay-200" style="margin-bottom: 30px;">Сравнение показателей до (констатирующий этап) и после (контрольный этап) внедрения инновационных приемов обучения.</p>
+                    
+                    <div class="table-layout">
+                        <table>
+                            <thead>
+                                <tr class="anim-slide-left delay-300">
+                                    <th>Уровень знаний</th>
+                                    <th>До эксперимента (Диагностика 1)</th>
+                                    <th>После эксперимента (Итог)</th>
+                                    <th>Динамика</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="anim-slide-left delay-400">
+                                    <td>Высокий уровень</td>
+                                    <td>20% (5 учеников)</td>
+                                    <td><strong>36%</strong> (9 учеников)</td>
+                                    <td class="data-up"><i class="fa-solid fa-arrow-trend-up"></i> +16%</td>
+                                </tr>
+                                <tr class="anim-slide-left delay-500">
+                                    <td>Средний уровень</td>
+                                    <td>52% (13 учеников)</td>
+                                    <td><strong>56%</strong> (14 учеников)</td>
+                                    <td class="data-up"><i class="fa-solid fa-arrow-trend-up"></i> +4%</td>
+                                </tr>
+                                <tr class="anim-slide-left delay-600">
+                                    <td>Низкий уровень</td>
+                                    <td>28% (7 учеников)</td>
+                                    <td><strong>8%</strong> (2 ученика)</td>
+                                    <td class="data-down"><i class="fa-solid fa-arrow-trend-down"></i> -20%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="anim-pop delay-800" style="margin-top: 30px; font-style: italic; text-align: center; color: var(--color-accent-blue); background: #f0f9ff; padding: 15px; border-radius: 8px;">
+                        <i class="fa-solid fa-bullhorn"></i> Ключевой результат: резкое снижение числа учеников с низким уровнем знаний (с 28% до 8%).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Conclusion -->
+        <div class="slide-wrapper" id="sw12">
+            <div class="slide-container dark-theme slide">
+                <div class="section-title-layout">
+                    <h2 class="anim-drop delay-100">Заключение</h2>
+                    <hr class="anim-line delay-200" style="border: 2px solid var(--color-accent-blue); margin: 0 auto 40px auto;">
+                    <p class="anim-fade-up delay-400">
+                        Проведённая работа полностью подтверждает целесообразность внедрения современных педагогических технологий и разнообразных методических приёмов (игры, осмысленное запоминание, работа в парах). 
+                    </p>
+                    <p class="anim-zoom delay-700" style="margin-top: 20px; color: var(--color-accent-gold); font-weight: 600;">
+                        Это способствует значительному повышению качества образования и успешности обучающихся начальных классов.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Q&A -->
+        <div class="slide-wrapper" id="sw13">
+            <div class="slide-container dark-theme slide" style="justify-content: center;">
+                <div class="section-title-layout" style="text-align: center; width: 100%;">
+                    <h1 class="anim-zoom delay-200" style="font-size: 72px; color: var(--color-accent-gold); margin-bottom: 20px;">Спасибо за внимание!</h1>
+                    <p class="anim-fade-up delay-500" style="font-size: 24px; color: #cbd5e1; margin-top: 20px;">Готова ответить на ваши вопросы.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slideWrappers = document.querySelectorAll('.slide-wrapper');
+            const wrapper = document.getElementById('presentationWrapper');
+            const navDotsContainer = document.getElementById('navDots');
+
+            // 1. Создаем точки навигации
+            slideWrappers.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    slideWrappers[index].scrollIntoView({ behavior: 'smooth' });
+                });
+                navDotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.dot');
+
+            // 2. Intersection Observer (Умный запуск анимаций)
+            const observerOptions = { root: wrapper, rootMargin: '0px', threshold: 0.5 };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const innerSlide = entry.target.querySelector('.slide');
+                    const index = Array.from(slideWrappers).indexOf(entry.target);
+
+                    if (entry.isIntersecting) {
+                        innerSlide.classList.add('is-visible');
+                        entry.target.classList.add('active');
+                        dots.forEach(d => d.classList.remove('active'));
+                        if(dots[index]) dots[index].classList.add('active');
+                    } else {
+                        innerSlide.classList.remove('is-visible');
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, observerOptions);
+
+            slideWrappers.forEach(sw => observer.observe(sw));
+
+            // 3. Управление клавиатурой
+            document.addEventListener('keydown', (e) => {
+                let currentIndex = Array.from(dots).findIndex(dot => dot.classList.contains('active'));
+                
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+                    e.preventDefault();
+                    if (currentIndex < slideWrappers.length - 1) {
+                        slideWrappers[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    e.preventDefault();
+                    if (currentIndex > 0) {
+                        slideWrappers[currentIndex - 1].scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
