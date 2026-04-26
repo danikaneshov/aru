@@ -113,14 +113,13 @@
         /* =========================================
            3. LAYOUT DEFINITIONS
            ========================================= */
-        .title-layout { display: flex; flex-direction: column; justify-content: center; height: 100%; width: 80%; }
-        .title-layout .subtitle { font-size: 24px; color: var(--color-accent-gold); margin-bottom: 40px; font-weight: 600; letter-spacing: 2px;}
+        .title-layout { display: flex; flex-direction: column; justify-content: center; height: 100%; width: 85%; }
+        .title-layout .subtitle { font-size: 24px; color: var(--color-accent-gold); font-weight: 600; letter-spacing: 1px;}
         .title-layout .meta-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 30px; }
         .meta-info p { font-size: 16px; margin-bottom: 5px; color: #cbd5e1; }
 
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; align-items: center; }
         .image-wrapper { border-radius: 12px; height: 400px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background-color: var(--color-bg-secondary);}
-        /* Object fit cover ensures the black borders of screenshots are cropped perfectly */
         .image-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: center; } 
 
         .two-column.tiled { align-items: stretch; }
@@ -203,7 +202,12 @@
         <div class="slide-wrapper" id="sw1">
             <div class="slide-container dark-theme slide">
                 <div class="title-layout">
-                    <p class="subtitle anim-slide-right delay-100">Высший педагогический колледж МУА (1928)</p>
+                    <!-- Логотип и полное название университета -->
+                    <div class="anim-slide-right delay-100" style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
+                        <img src="2c0265b0-dcbf-4a4f-95ca-f958e813beb5.jpeg" alt="Логотип университета" style="height: 90px; object-fit: contain; background: #fff; padding: 5px; border-radius: 8px;">
+                        <p class="subtitle" style="margin-bottom: 0; line-height: 1.4;">Высший педагогический колледж<br>Международного университета Астана (1928)</p>
+                    </div>
+                    
                     <h1 class="anim-drop delay-300">Приемы обучения младших школьников табличному умножению и делению</h1>
                     
                     <div class="meta-info anim-fade-up delay-600">
@@ -221,10 +225,10 @@
             </div>
         </div>
 
-        <!-- Slide 2: Intro (Текст по центру) -->
+        <!-- Slide 2: Intro -->
         <div class="slide-wrapper" id="sw2">
             <div class="slide-container slide">
-                <h2 class="slide-title anim-slide-right delay-100">Введение в проблематику</h2>
+                <h2 class="slide-title anim-slide-right delay-100">Введение</h2>
                 <div class="content-area" style="align-items: center; text-align: center; max-width: 900px; margin: 0 auto;">
                     <div class="anim-zoom delay-200" style="font-size: 50px; color: var(--color-accent-gold); margin-bottom: 20px;"><i class="fa-solid fa-graduation-cap"></i></div>
                     <p class="anim-fade-up delay-300" style="font-size: 24px; margin-bottom: 30px;">Обучение математике в начальной школе — <strong>важнейший этап</strong> формирования базовых учебных навыков учащихся.</p>
@@ -238,7 +242,7 @@
             </div>
         </div>
 
-        <!-- Slide 3: Apparatus (Tiles) -->
+        <!-- Slide 3: Apparatus -->
         <div class="slide-wrapper" id="sw3">
             <div class="slide-container slide">
                 <h2 class="slide-title anim-drop delay-100">Методологический аппарат</h2>
@@ -264,7 +268,7 @@
             </div>
         </div>
 
-        <!-- Slide 4: Base (С добавленным фото класса) -->
+        <!-- Slide 4: Base -->
         <div class="slide-wrapper" id="sw4">
             <div class="slide-container slide">
                 <h2 class="slide-title anim-slide-right delay-100">База исследования</h2>
@@ -285,7 +289,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- ФОТО 1: Класс с желтой стеной -->
                         <div class="image-wrapper anim-zoom delay-600" style="height: 480px; position: relative;">
                             <img src="WhatsApp Image 2026-04-21 at 17.42.30.jpeg" alt="Класс BINOM-school">
                             <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); color: white; padding: 8px 15px; border-radius: 8px; font-size: 14px;">
@@ -322,7 +325,7 @@
             </div>
         </div>
 
-        <!-- Slide 6: Bleed Image (С фото интерактивной доски) -->
+        <!-- Slide 6: Bleed Image -->
         <div class="slide-wrapper" id="sw6">
             <div class="slide-container bleed-image-layout slide">
                 <div class="content-container">
@@ -336,7 +339,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- ФОТО 2: Доска 15:5 -->
                 <div class="image-container anim-zoom delay-200">
                     <img class="bleed-image-side" src="image_ae2307.jpg" style="object-position: top center;" alt="Наглядно-образное мышление на доске">
                 </div>
@@ -374,14 +376,13 @@
             </div>
         </div>
 
-        <!-- Slide 8: НОВЫЙ СЛАЙД (Практическая реализация - Фото) -->
+        <!-- Slide 8: Практическая реализация -->
         <div class="slide-wrapper" id="sw8">
             <div class="slide-container slide">
                 <h2 class="slide-title anim-slide-right delay-100">Практическая реализация на уроках</h2>
                 <div class="content-area">
                     <div class="two-column" style="gap: 40px; align-items: stretch;">
                         
-                        <!-- ФОТО 3: Игра перетягивание каната -->
                         <div class="anim-fade-up delay-300" style="display: flex; flex-direction: column; background: var(--color-bg-secondary); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
                             <div class="image-wrapper" style="height: 320px; border-radius: 0; box-shadow: none;">
                                 <img src="WhatsApp Image 2026-04-21 at 17.42.30 (1).jpeg" alt="Математическое перетягивание каната">
@@ -392,7 +393,6 @@
                             </div>
                         </div>
 
-                        <!-- ФОТО 4: Работа в парах/группах -->
                         <div class="anim-fade-up delay-500" style="display: flex; flex-direction: column; background: var(--color-bg-secondary); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
                             <div class="image-wrapper" style="height: 320px; border-radius: 0; box-shadow: none;">
                                 <img src="WhatsApp Image 2026-04-21 at 17.42.29 (1).jpeg" style="object-position: center 30%;" alt="Работа в группах">
