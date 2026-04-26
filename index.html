@@ -209,7 +209,6 @@
         .is-visible .anim-line { animation: drawLine 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .is-visible .anim-bar { animation: growBar 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* Stagger text letters/words if needed, simple implementation via spans */
         .delay-100 { animation-delay: 0.1s !important; } .delay-200 { animation-delay: 0.2s !important; }
         .delay-300 { animation-delay: 0.3s !important; } .delay-400 { animation-delay: 0.4s !important; }
         .delay-500 { animation-delay: 0.5s !important; } .delay-600 { animation-delay: 0.6s !important; }
@@ -527,44 +526,44 @@
                                 <tr class="anim-slide-left delay-400">
                                     <td>Высокий уровень</td>
                                     <td style="padding-right: 40px;">
-                                        <div><strong style="font-size: 26px; color: var(--color-bg-dark);"><span class="counter-anim" data-target="24">0</span>%</strong> (6 учеников)</div>
-                                        <div class="progress-track"><div class="progress-fill anim-bar delay-800" style="--target-width: 24%; background-color: #94a3b8;"></div></div>
+                                        <div><strong style="font-size: 26px; color: var(--color-bg-dark);"><span class="counter-anim" data-target="20">0</span>%</strong> (5 учеников)</div>
+                                        <div class="progress-track"><div class="progress-fill anim-bar delay-800" style="--target-width: 20%; background-color: #94a3b8;"></div></div>
                                     </td>
                                     <td style="padding-right: 40px;">
-                                        <div><strong style="font-size: 26px; color: var(--color-accent-green);"><span class="counter-anim" data-target="36">0</span>%</strong> (9 учеников)</div>
-                                        <div class="progress-track"><div class="progress-fill anim-bar delay-800" style="--target-width: 36%; background-color: var(--color-accent-green);"></div></div>
+                                        <div><strong style="font-size: 26px; color: var(--color-accent-green);"><span class="counter-anim" data-target="24">0</span>%</strong> (6 учеников)</div>
+                                        <div class="progress-track"><div class="progress-fill anim-bar delay-800" style="--target-width: 24%; background-color: var(--color-accent-green);"></div></div>
                                     </td>
-                                    <td class="data-up"><i class="fa-solid fa-arrow-trend-up"></i> +<span class="counter-anim" data-target="12">0</span>%</td>
+                                    <td class="data-up"><i class="fa-solid fa-arrow-trend-up"></i> +<span class="counter-anim" data-target="4">0</span>%</td>
                                 </tr>
                                 <tr class="anim-slide-left delay-500">
                                     <td>Средний уровень</td>
                                     <td style="padding-right: 40px;">
-                                        <div><strong style="font-size: 26px; color: var(--color-bg-dark);"><span class="counter-anim" data-target="56">0</span>%</strong> (14 учеников)</div>
-                                        <div class="progress-track"><div class="progress-fill anim-bar delay-1000" style="--target-width: 56%; background-color: #94a3b8;"></div></div>
+                                        <div><strong style="font-size: 26px; color: var(--color-bg-dark);"><span class="counter-anim" data-target="52">0</span>%</strong> (13 учеников)</div>
+                                        <div class="progress-track"><div class="progress-fill anim-bar delay-1000" style="--target-width: 52%; background-color: #94a3b8;"></div></div>
                                     </td>
                                     <td style="padding-right: 40px;">
                                         <div><strong style="font-size: 26px; color: var(--color-accent-gold);"><span class="counter-anim" data-target="56">0</span>%</strong> (14 учеников)</div>
                                         <div class="progress-track"><div class="progress-fill anim-bar delay-1000" style="--target-width: 56%; background-color: var(--color-accent-gold);"></div></div>
                                     </td>
-                                    <td class="data-neutral"><i class="fa-solid fa-minus"></i> 0%</td>
+                                    <td class="data-up"><i class="fa-solid fa-arrow-trend-up"></i> +<span class="counter-anim" data-target="4">0</span>%</td>
                                 </tr>
                                 <tr class="anim-slide-left delay-600">
                                     <td>Низкий уровень</td>
                                     <td style="padding-right: 40px;">
-                                        <div><strong style="font-size: 26px; color: var(--color-bg-dark);"><span class="counter-anim" data-target="20">0</span>%</strong> (5 учеников)</div>
-                                        <div class="progress-track"><div class="progress-fill anim-bar delay-1200" style="--target-width: 20%; background-color: #94a3b8;"></div></div>
+                                        <div><strong style="font-size: 26px; color: var(--color-bg-dark);"><span class="counter-anim" data-target="28">0</span>%</strong> (7 учеников)</div>
+                                        <div class="progress-track"><div class="progress-fill anim-bar delay-1200" style="--target-width: 28%; background-color: #94a3b8;"></div></div>
                                     </td>
                                     <td style="padding-right: 40px;">
-                                        <div><strong style="font-size: 26px; color: var(--color-accent-red);"><span class="counter-anim" data-target="8">0</span>%</strong> (2 ученика)</div>
-                                        <div class="progress-track"><div class="progress-fill anim-bar delay-1200" style="--target-width: 8%; background-color: var(--color-accent-red);"></div></div>
+                                        <div><strong style="font-size: 26px; color: var(--color-accent-red);"><span class="counter-anim" data-target="20">0</span>%</strong> (5 учеников)</div>
+                                        <div class="progress-track"><div class="progress-fill anim-bar delay-1200" style="--target-width: 20%; background-color: var(--color-accent-red);"></div></div>
                                     </td>
-                                    <td class="data-down"><i class="fa-solid fa-arrow-trend-down"></i> -<span class="counter-anim" data-target="12">0</span>%</td>
+                                    <td class="data-down"><i class="fa-solid fa-arrow-trend-down"></i> -<span class="counter-anim" data-target="8">0</span>%</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <p class="anim-pop delay-1200" style="margin-top: 30px; font-size: 20px; font-weight: 500; text-align: center; color: var(--color-accent-blue); background: #eff6ff; padding: 15px 30px; border-radius: 12px; border: 1px solid #bfdbfe; box-shadow: 0 4px 15px rgba(59,130,246,0.1);">
-                        <i class="fa-solid fa-fire" style="color: #f97316; margin-right: 8px; animation: floatIcon 2s infinite;"></i> Ключевой результат: значительное снижение числа учеников с низким уровнем знаний (с 20% до 8%) и переход их в группу с высоким уровнем.
+                        <i class="fa-solid fa-fire" style="color: #f97316; margin-right: 8px; animation: floatIcon 2s infinite;"></i> Ключевой результат: снижение числа учеников с низким уровнем знаний (с 28% до 20%) и их переход в другие группы.
                     </p>
                 </div>
             </div>
